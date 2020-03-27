@@ -23,7 +23,7 @@ void populateRowWithPawns(Board* boardptr, Pos2 i, Color color)
 	i.x.x = 0;
 	for (i; i.x.x < 8; i.x.x++)
 	{
-		new Pawn(boardptr, i, white); //create a new piece on the heap and allow its constructor to put its pointer in the spot on the board
+		new Piece(boardptr, i, white); //create a new piece on the heap and allow its constructor to put its pointer in the spot on the board
 	}
 }
 

@@ -2,12 +2,13 @@
 #include "Debugtools/Log.h"
 #include "PosVec.h"
 #include "Colors.h"
+#include "Board.h"
 
 
 struct Piece {
 	Pos2 pos;
 	Color color; //white=true, black=false
-	Board* myBoard;
+	Board* myBoard; //piece needs to know which board it is on in order to see... for example... which other pieces it can capture
 
 	void put_this_in_board(Board* boardptr);
 	void put_this_in_board();
@@ -26,8 +27,4 @@ struct Piece {
 
 	void move(Pos2 location);
 	void move(Vec2 delta);
-};
-struct Pawn : private Piece
-{
-	using Piece::Piece;
 };

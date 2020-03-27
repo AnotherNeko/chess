@@ -28,9 +28,9 @@
   <ItemGroup>
     <ClInclude Include="Board.h" />
     <ClInclude Include="ChessPieces.h" />
-    <ClInclude Include="Colors.h" />
     <ClInclude Include="Debugtools\Log.h" />
     <ClInclude Include="PosVec.h" />
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

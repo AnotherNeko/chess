@@ -2,9 +2,7 @@
 
 #include <iostream>
 #include "Debugtools/Log.h"
-void Print(const char* const output) { std::cout << output; }
 #include "PosVec.h"
-#include "Colors.h"
 #include "Board.h"
 #include "ChessPieces.h"
 

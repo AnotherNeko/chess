@@ -46,3 +46,8 @@ Pos1 operator+(Vec1 left, Pos1 right);
 
 Pos2 operator+(Pos2 left, Vec2 right);
 Pos2 operator+(Vec2 left, Pos2 right);
+
+Vec1 operator-(Pos1 start, Pos1 finish);
+Vec2 operator-(Pos2 start, Pos2 finish);
+
+bool operator==(Vec2 a, Vec2 b);

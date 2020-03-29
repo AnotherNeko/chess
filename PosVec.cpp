@@ -73,3 +73,18 @@ Pos2 operator+(Vec2 left, Pos2 right)
 {
 	return(operator+(right, left)); //commutative property
 }
+
+Vec1 operator-(Pos1 start, Pos1 finish)
+{
+	return Vec1((signed char)finish.x - (signed char)start.x);
+}
+
+Vec2 operator-(Pos2 start, Pos2 finish)
+{
+	return Vec2(finish.x - start.x, finish.y - start.y);
+}
+
+bool operator==(Vec2 a, Vec2 b)
+{
+	return (bool)(a.x.x == b.x.x && a.y.x == b.y.x);
+}

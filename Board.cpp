@@ -8,22 +8,24 @@ Board* Board::mainInstance = nullptr;
 
 void populateBoard(Board* boardptr);
 
+//constructor also populates the board
 Board::Board()
 {
     populateBoard(this);
     mainInstance = this;
 }
 
-void populateRowWithPieces(Board* boardptr, Pos2 i, Pieces piece)
+//fill a row with pieces
+void populateRowWithPieces(Board* boardptr, Pos2 i, Pieces whichkind) 
 {
 	i.x.x = 0;
 	for (i; i.x.x < 8; i.x.x++)
 	{
-		boardptr->mypieces[i.index] = piece;
+		((Pieces*)((void*)boardptr) + sizeof(boardptr) + (i.index*((int)sizeof(Pieces)))) = whichkind; //does the same thing as 		(boardptr->mypieces)[i.index] = whichkind;
 	}
 }
 
-
+//put pieces on the board
 void populateBoard(Board* boardptr)
 {
 	/*
@@ -43,6 +45,7 @@ void populateBoard(Board* boardptr)
 	Log(info, "populated board");
 }
 
+//does logic to move a piece whereever, while obeying other chess rules like capturing and staying on the board
 void Board::forceMove(Pos2 piece, Pos2 to)
 {
 	if (!to.errored)
@@ -68,20 +71,26 @@ void Board::forceMove(Pos2 piece, Pos2 to)
 	}
 	else
 	{
-		LogWarning("can't forceMove there, `to` errored!");
+		LogWarning("can't forceMove there, `to` errored (you probably tried to move off of the board)!");
 	}
 }
 
 
-static void moveRook(Board* board, Pos2 rook, Pos2 to)
+static inline void moveRook(Board* board, Pos2 rook, Pos2 to)
 {
 
 }
-static void moveKnight(Board* board, Pos2 knight, Pos2 to)
+static inline void moveKnight(Board* board, Pos2 knight, Pos2 to)
 {
-	if (((abs(knight.x.x - to.x.x) == 2) && (abs(knight.y.x - to.y.x) == 1))
-		||
-		((abs(knight.x.x - to.x.x) == 1) && (abs(knight.y.x - to.y.x) == 2)))
+	Vec2 temp = to - knight;
+	if (  temp == Vec2(+2, +1)
+		||temp == Vec2(+2, -1)
+		||temp == Vec2(+1, +2)
+		||temp == Vec2(+1, -2)
+		||temp == Vec2(-2, +1)
+		||temp == Vec2(-2, -1)
+		||temp == Vec2(-1, +1)
+		||temp == Vec2(-1, -1))
 	{
 		board->forceMove(knight, to);
 	}
@@ -90,15 +99,15 @@ static void moveKnight(Board* board, Pos2 knight, Pos2 to)
 		LogWarning("invalid move for Knight");
 	}
 }
-static void moveBishop(Board* board, Pos2 bishop, Pos2 to)
+static inline void moveBishop(Board* board, Pos2 bishop, Pos2 to)
 {
 
 }
-static void moveQueen(Board* board, Pos2 queen, Pos2 to)
+static inline void moveQueen(Board* board, Pos2 queen, Pos2 to)
 {
 
 }
-static void moveKing(Board* board, Pos2 king, Pos2 to)
+static inline void moveKing(Board* board, Pos2 king, Pos2 to)
 {
 
 }
@@ -149,4 +158,9 @@ void Board::move(Pos2 piece, Pos2 to)
 void Board::move(Pos2 piece, Vec2 delta)
 {
 	move(piece, piece + delta);
+}
+
+void Board::addToCappedList(Pieces piece)
+{
+	LogInfo("capped a piece");
 }

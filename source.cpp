@@ -13,7 +13,5 @@
 
 
 int main() {
-	Log(info, "size of piece:" + unsignedchar_toString(sizeof(Piece)));
-	Log(info, "size of pawn:" + unsignedchar_toString(sizeof(Pawn)));
 	Board board;	
 }

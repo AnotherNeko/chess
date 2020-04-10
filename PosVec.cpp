@@ -88,3 +88,13 @@ bool operator==(Vec2 a, Vec2 b)
 {
 	return (bool)(a.x.x == b.x.x && a.y.x == b.y.x);
 }
+
+bool operator==(Pos1 a, Pos1 b)
+{
+	return (a.x == b.x);
+}
+
+bool operator==(Pos2 a, Pos2 b)
+{
+	return (a.x == b.x && a.y == b.y);
+}

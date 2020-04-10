@@ -51,3 +51,5 @@ Vec1 operator-(Pos1 start, Pos1 finish);
 Vec2 operator-(Pos2 start, Pos2 finish);
 
 bool operator==(Vec2 a, Vec2 b);
+bool operator==(Pos1 a, Pos1 b);
+bool operator==(Pos2 a, Pos2 b);

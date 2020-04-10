@@ -21,7 +21,14 @@ void populateRowWithPieces(Board* boardptr, Pos2 i, Pieces whichkind)
 	i.x.x = 0;
 	for (i; i.x.x < 8; i.x.x++)
 	{
-		((Pieces*)((void*)boardptr) + sizeof(boardptr) + (i.index*((int)sizeof(Pieces)))) = whichkind; //does the same thing as 		(boardptr->mypieces)[i.index] = whichkind;
+		/**(
+			(Pieces*)(
+				boardptr
+				+ sizeof(Board*)
+				+ multiply((int)(i.index()) , (int)sizeof(Pieces))
+			)
+		) = whichkind;*/
+		(boardptr->mypieces)[i.index()] = whichkind;
 	}
 }
 
@@ -39,8 +46,29 @@ void populateBoard(Board* boardptr)
 	21  ██  ██  ██  ██ white side
 	10██  ██  ██  ██   white side
 	*/
+
+	//putting all the pieces where they need to go
 	populateRowWithPieces(boardptr, Pos2(0, 1), whitePawn);
+	(boardptr->mypieces)[Pos2(0, 0).index()] = whiteRook;
+	(boardptr->mypieces)[Pos2(1, 0).index()] = whiteKnight;
+	(boardptr->mypieces)[Pos2(2, 0).index()] = whiteBishop;
+	(boardptr->mypieces)[Pos2(3, 0).index()] = whiteKing;
+	(boardptr->mypieces)[Pos2(4, 0).index()] = whiteQueen;
+	(boardptr->mypieces)[Pos2(5, 0).index()] = whiteBishop;
+	(boardptr->mypieces)[Pos2(6, 0).index()] = whiteKnight;
+	(boardptr->mypieces)[Pos2(7, 0).index()] = whiteRook;
+
 	populateRowWithPieces(boardptr, Pos2(0, 6), blackPawn);
+	(boardptr->mypieces)[Pos2(0, 7).index()] = blackRook;
+	(boardptr->mypieces)[Pos2(1, 7).index()] = blackKnight;
+	(boardptr->mypieces)[Pos2(2, 7).index()] = blackBishop;
+	(boardptr->mypieces)[Pos2(3, 7).index()] = blackKing;
+	(boardptr->mypieces)[Pos2(4, 7).index()] = blackQueen;
+	(boardptr->mypieces)[Pos2(5, 7).index()] = blackBishop;
+	(boardptr->mypieces)[Pos2(6, 7).index()] = blackKnight;
+	(boardptr->mypieces)[Pos2(7, 7).index()] = blackRook;
+	//irl, these are done one at a time, so I don't see a problem with the program doing the same thing
+
 	//also put all the other pieces in place if you're not lazy like me
 	Log(info, "populated board");
 }
@@ -50,18 +78,18 @@ void Board::forceMove(Pos2 piece, Pos2 to)
 {
 	if (!to.errored)
 	{
-		if (mypieces[to.index] == 0)
+		if (mypieces[to.index()] == 0)
 		{
-			mypieces[to.index] = mypieces[piece.index]; //copy to new location, overwriting the empty space
-			mypieces[piece.index] = empty; //remove old spot
+			mypieces[to.index()] = mypieces[piece.index()]; //copy to new location, overwriting the empty space
+			mypieces[piece.index()] = empty; //remove old spot
 		}
 		else
 		{	
-			if(!matchingSigns(mypieces[piece.index], mypieces[to.index]))
+			if(!matchingSigns(mypieces[piece.index()], mypieces[to.index()]))
 			{
-				addToCappedList(mypieces[to.index]); //capture
-				mypieces[to.index] = mypieces[piece.index]; //copy to captured piece, overwriting it
-				mypieces[piece.index] = empty; //remove old spot
+				addToCappedList(mypieces[to.index()]); //capture
+				mypieces[to.index()] = mypieces[piece.index()]; //copy to captured piece, overwriting it
+				mypieces[piece.index()] = empty; //remove old spot
 			}
 			else
 			{
@@ -113,12 +141,26 @@ static inline void moveKing(Board* board, Pos2 king, Pos2 to)
 }
 void Board::move(Pos2 piece, Pos2 to)
 {
-	switch (mypieces[piece.index])
+	switch (mypieces[piece.index()])
 	{
 	case empty:
 		LogWarning("can't move nothing");
 		break;
 	case blackPawn:
+		if (to == piece + Vec2(0,-1))
+		{
+			forceMove(piece, to);
+		}
+		else {
+			if (to == piece + Vec2(0, -2) && to.y.x == 4)
+			{
+				forceMove(piece, to);
+			}
+			else
+			{
+				LogWarning("invalid move for blackPawn");
+			}
+		}
 		break;
 	case blackRook:
 		moveRook(this, piece, to);
@@ -136,6 +178,20 @@ void Board::move(Pos2 piece, Pos2 to)
 		moveKing(this, piece, to);
 		break;
 	case whitePawn:
+		if (to == piece + Vec2(0, 1))
+		{
+			forceMove(piece, to);
+		}
+		else {
+			if (to == piece + Vec2(0, 2) && to.y.x == 3)
+			{
+				forceMove(piece, to);
+			}
+			else
+			{
+				LogWarning("invalid move for blackPawn");
+			}
+		}
 		break;
 	case whiteRook:
 		moveRook(this, piece, to);

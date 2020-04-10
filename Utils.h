@@ -39,3 +39,8 @@ unsigned char inline abs(signed char _X)
 {
     return(abs((int)_X));
 }
+
+inline int multiply(int a, int b)
+{
+    return a * b;
+}

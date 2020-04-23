@@ -1,6 +1,43 @@
 #pragma once
 
+#include "ChessPieces.h"
+#include <string>
 void inline Print(const char* const output) { std::cout << output; }
+
+std::string Pos2_to_string(Pieces piece)
+{
+    switch (piece)
+    {
+    case         empty:
+        return ("empty");
+    case         blackPawn:
+        return ("blackPawn");
+    case         blackRook:
+        return ("blackRook");
+    case         blackKnight:
+        return ("blackKnight");
+    case         blackBishop:
+        return ("blackBishop");
+    case         blackQueen:
+        return ("blackQueen");
+    case         blackKing:
+        return ("blackKing");
+    case         whitePawn:
+        return ("whitePawn");
+    case         whiteRook:
+        return ("whiteRook");
+    case         whiteKnight:
+        return ("whiteKnight");
+    case         whiteBishop:
+        return ("whiteBishop");
+    case         whiteQueen:
+        return ("whiteQueen");
+    case         whiteKing:
+        return ("whiteKing");
+    default:
+        return ("[eRrOr}");
+    }
+}
 
 /*
 https://www.newgrounds.com/bbs/topic/1332041

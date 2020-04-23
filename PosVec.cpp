@@ -74,6 +74,12 @@ Pos2 operator+(Vec2 left, Pos2 right)
 	return(operator+(right, left)); //commutative property
 }
 
+void operator+=(Pos2& left, Vec2 right)
+{
+	left = left + right;
+}
+
+
 Vec1 operator-(Pos1 start, Pos1 finish)
 {
 	return Vec1((signed char)finish.x - (signed char)start.x);
@@ -112,4 +118,28 @@ bool operator==(Pos2 a, Pos2 b)
 bool operator!=(Pos2 a, Pos2 b)
 {
 	return (a.x != b.x || a.y != b.y);
+}
+
+std::string operator$(Pos2 a)
+{
+	/*
+	  A0B1C2D3E4F5G6H7     pairs are for (irl pencil value, signed char value)
+	87  ██  ██  ██  ██ black side
+	76██  ██  ██  ██   black side
+	65  ██  ██  ██  ██
+	54██  ██  ██  ██
+	43  ██  ██  ██  ██
+	32██  ██  ██  ██
+	21  ██  ██  ██  ██ white side
+	10██  ██  ██  ██   white side
+	*/
+	std::string buffer = std::string("(");
+	buffer.push_back('A' + a.x.x);
+	return (buffer + std::to_string(a.y.x + 1) + ")");
+}
+
+
+std::string operator$(Vec2 a)
+{
+	return ((std::string)"(" + std::to_string(a.x.x) + (std::string)", " + std::to_string(a.y.x) + ")");
 }

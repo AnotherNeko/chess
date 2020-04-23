@@ -17,9 +17,10 @@ static std::string LevelToString(LogLevel level)
 
 std::string unsignedchar_toString(unsigned char u)
 {
-	char buffer[3];
-	snprintf(buffer, 4, "%u", u);
-	return(std::string(buffer));
+	const static unsigned int size = 4;
+	char buffer[size];
+	snprintf(buffer, size, "%u", u);
+	return(buffer);
 }
 
 void Log(LogLevel level, const std::string& message)

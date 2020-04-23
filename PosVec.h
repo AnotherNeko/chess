@@ -46,6 +46,7 @@ Pos1 operator+(Vec1 left, Pos1 right);
 
 Pos2 operator+(Pos2 left, Vec2 right);
 Pos2 operator+(Vec2 left, Pos2 right);
+void operator+=(Pos2& left, Vec2 right);
 
 Vec1 operator-(Pos1 start, Pos1 finish);
 Vec2 operator-(Pos2 start, Pos2 finish);
@@ -57,3 +58,8 @@ bool operator==(Pos1 a, Pos1 b);
 bool operator!=(Pos1 a, Pos1 b);
 bool operator==(Pos2 a, Pos2 b);
 bool operator!=(Pos2 a, Pos2 b);
+
+#include <string>
+
+std::string operator$(Pos2 a);
+std::string operator$(Vec2 a);

@@ -14,4 +14,5 @@
 
 int main() {
 	Board board;
+	board.move(Pos2(0, 0), Vec2(0, 6));
 }

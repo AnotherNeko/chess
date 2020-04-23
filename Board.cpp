@@ -74,7 +74,7 @@ void populateBoard(Board* boardptr)
 }
 
 //does logic to move a piece whereever, while obeying other chess rules like capturing and staying on the board
-void Board::forceMove(Pos2 piece, Pos2 to)
+bool Board::forceMove(Pos2 piece, Pos2 to)
 {
 	if (!to.errored)
 	{
@@ -82,6 +82,7 @@ void Board::forceMove(Pos2 piece, Pos2 to)
 		{
 			mypieces[to.index()] = mypieces[piece.index()]; //copy to new location, overwriting the empty space
 			mypieces[piece.index()] = empty; //remove old spot
+			return(true);
 		}
 		else
 
@@ -91,32 +92,61 @@ void Board::forceMove(Pos2 piece, Pos2 to)
 				addToCappedList(mypieces[to.index()]); //capture
 				mypieces[to.index()] = mypieces[piece.index()]; //copy to captured piece, overwriting it
 				mypieces[piece.index()] = empty; //remove old spot
+				return(true);
 			}
 			else
 			{
 				LogWarning("can't forceMove there, there's a piece of my color already there");
+				return(false);
 			}
 		}
 	}
 	else
 	{
 		LogWarning("can't forceMove there, `to` errored (you probably tried to move off of the board)!");
+		return(false);
 	}
 }
 
 
-static inline void moveRook(Board* board, Pos2 rook, Pos2 to)
+static void moveRook(Board* board, Pos2 rook, Pos2 to)
 {
 	if ((rook.x == to.x) xor (rook.y == to.y)) //can go NESW
 	{
+		Vec2 norm;
+		if (to.x.x > rook.x.x)
+		{
+			norm = Vec2(1, 0);
+		}
+		if (to.x.x < rook.x.x)
+		{
+			norm = Vec2(-1, 0);
+		}
+		if (to.y.x > rook.y.x)
+		{
+			norm = Vec2(0, 1);
+		}
+		if (to.y.x < rook.y.x)
+		{
+			norm = Vec2(0, -1);
+		}
+		for (Pos2 i = rook + norm; i != to; i += norm)
+		{
+			if (board->mypieces[i.index()] != empty) 
+			{
+				LogWarning("There's a piece (" + Pos2_to_string(board->mypieces[i.index()]) + " at " + operator$(i) + ") in the way");
+				return;
+			}
+		}
 		board->forceMove(rook, to);
 	}
 	else
 	{
 		LogWarning("invalid move for Rook");
+		return;
 	}
 }
-static inline void moveKnight(Board* board, Pos2 knight, Pos2 to)
+static void moveKnight(Board* board, Pos2 knight, Pos2 to)
 {
 	Vec2 temp = to - knight;   
 	if (  temp == Vec2(+2, +1)	 //  ██  ██
@@ -135,19 +165,45 @@ static inline void moveKnight(Board* board, Pos2 knight, Pos2 to)
 		LogWarning("invalid move for Knight");
 	}
 }
-static inline void moveBishop(Board* board, Pos2 bishop, Pos2 to)
+static void moveBishop(Board* board, Pos2 bishop, Pos2 to)
 {
 	Vec2 temp = to - bishop;
 	if (abs(temp.x.x) == abs(temp.y.x) && temp != Vec2(/*going nowhere*/)) //can go diagonally
 	{
+		Vec2 norm;
+		if (to.x.x > rook.x.x && to.y.x > rook.y.x) //change in x and change in y are positive
+		{
+			norm = Vec2(1, 1);
+		}
+		if (to.x.x < rook.x.x && to.y.x < rook.y.x) //change in x and change in y are negative
+		{
+			norm = Vec2(-1, -1);
+		}
+		if (to.x.x > rook.x.x && to.y.x < rook.y.x) 
+		{
+			norm = Vec2(1, -1);
+		}
+		if (to.x.x < rook.x.x && to.y.x > rook.y.x) 
+		{
+			norm = Vec2(-1, 1);
+		}
+		for (Pos2 i = rook + norm; i != to; i += norm)
+		{
+			if (board->mypieces[i.index()] != empty)
+			{
+				LogWarning("There's a piece (" + Pos2_to_string(board->mypieces[i.index()]) + " at " + operator$(i) + ") in the way");
+				return;
+			}
+		}
 		board->forceMove(bishop, to);
 	}
 	else
 	{
 		LogWarning("invalid move for Bishop");
+		return;
 	}
 }
-static inline void moveQueen(Board* board, Pos2 queen, Pos2 to)
+static void moveQueen(Board* board, Pos2 queen, Pos2 to)
 {
 	//can go straight in N, NE, E, SE, S, SW, W, NW
 	Vec2 temp = to - queen;
@@ -161,7 +217,7 @@ static inline void moveQueen(Board* board, Pos2 queen, Pos2 to)
 	}
 
 }
-static inline void moveKing(Board* board, Pos2 king, Pos2 to)
+static void moveKing(Board* board, Pos2 king, Pos2 to)
 {
 	Vec2 temp = to - king;
 	if (abs(temp.x.x) == 1 || abs(temp.y.x) == 1) //can go 1 or 1.21 in any direction

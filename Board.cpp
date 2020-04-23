@@ -171,23 +171,23 @@ static void moveBishop(Board* board, Pos2 bishop, Pos2 to)
 	if (abs(temp.x.x) == abs(temp.y.x) && temp != Vec2(/*going nowhere*/)) //can go diagonally
 	{
 		Vec2 norm;
-		if (to.x.x > rook.x.x && to.y.x > rook.y.x) //change in x and change in y are positive
+		if (to.x.x > bishop.x.x && to.y.x > bishop.y.x) //change in x and change in y are positive
 		{
 			norm = Vec2(1, 1);
 		}
-		if (to.x.x < rook.x.x && to.y.x < rook.y.x) //change in x and change in y are negative
+		if (to.x.x < bishop.x.x && to.y.x < bishop.y.x) //change in x and change in y are negative
 		{
 			norm = Vec2(-1, -1);
 		}
-		if (to.x.x > rook.x.x && to.y.x < rook.y.x) 
+		if (to.x.x > bishop.x.x && to.y.x < bishop.y.x) 
 		{
 			norm = Vec2(1, -1);
 		}
-		if (to.x.x < rook.x.x && to.y.x > rook.y.x) 
+		if (to.x.x < bishop.x.x && to.y.x > bishop.y.x) 
 		{
 			norm = Vec2(-1, 1);
 		}
-		for (Pos2 i = rook + norm; i != to; i += norm)
+		for (Pos2 i = bishop + norm; i != to; i += norm)
 		{
 			if (board->mypieces[i.index()] != empty)
 			{

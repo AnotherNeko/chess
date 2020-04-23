@@ -24,6 +24,17 @@ struct Pos2 {
 	*/
 	static bool errored;
 	Pos2() = delete;
+	/*
+	██A0B1C2D3E4F5G6H7     pairs are for (irl pencil value, signed char value)
+	87  ██  ██  ██  ██ black side
+	76██  ██  ██  ██   black side
+	65  ██  ██  ██  ██
+	54██  ██  ██  ██
+	43  ██  ██  ██  ██
+	32██  ██  ██  ██
+	21  ██  ██  ██  ██ white side
+	10██  ██  ██  ██   white side
+	*/
 	Pos2(Pos1 initial_xpos, Pos1 initial_ypos);
 	unsigned char index();
 };

@@ -149,14 +149,14 @@ static inline void moveRook(Board* board, Pos2 rook, Pos2 to)
 static inline void moveKnight(Board* board, Pos2 knight, Pos2 to)
 {
 	Vec2 temp = to - knight;
-	if (temp == Vec2(+2, +1)	 //  ██  ██
+	if (   temp == Vec2(+2, +1)	 //  ██  ██
 		|| temp == Vec2(+2, -1)	 //██      ██
 		|| temp == Vec2(+1, +2)	 //    []
 		|| temp == Vec2(+1, -2)	 //██      ██
 		|| temp == Vec2(-2, +1)	 //  ██  ██
 		|| temp == Vec2(-2, -1)
-		|| temp == Vec2(-1, +1)
-		|| temp == Vec2(-1, -1))
+		|| temp == Vec2(-1, +2)
+		|| temp == Vec2(-1, -2))
 	{
 		board->forceMove(knight, to);
 	}

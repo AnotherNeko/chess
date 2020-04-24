@@ -316,7 +316,7 @@ void Board::move(Pos2 piece, Pos2 to)
 				}
 				else
 				{
-					LogWarning("invalid move for blackPawn: can't jump over non-empty space (" + Piece_to_string(board->mypieces[(piece + Vec2(0, -1)).index()]) + " at " + operator$((piece + Vec2(0, -1))) + ") when moving 2 forward");
+					LogWarning("invalid move for blackPawn: can't jump over non-empty space (" + Piece_to_string(mypieces[(piece + Vec2(0, -1)).index()]) + " at " + operator$((piece + Vec2(0, -1))) + ") when moving 2 forward");
 					break;
 				}
 			}
@@ -331,7 +331,7 @@ void Board::move(Pos2 piece, Pos2 to)
 			}
 			else
 			{
-				LogWarning("invalid move for blackPawn: can't capture that spot (" + Piece_to_string(board->mypieces[to.index()]) + " at " + operator$(to) + ")");
+				LogWarning("invalid move for blackPawn: can't capture that spot (" + Piece_to_string(mypieces[to.index()]) + " at " + operator$(to) + ")");
 				break;
 			}
 		}
@@ -372,7 +372,7 @@ void Board::move(Pos2 piece, Pos2 to)
 				}
 				else
 				{
-					LogWarning("invalid move for whitePawn: can't jump over non-empty space (" + Piece_to_string(board->mypieces[(piece + Vec2(0, 1)).index()]) + " at " + operator$((piece + Vec2(0, 1))) + ") when moving 2 forward");
+					LogWarning("invalid move for whitePawn: can't jump over non-empty space (" + Piece_to_string(mypieces[(piece + Vec2(0, 1)).index()]) + " at " + operator$((piece + Vec2(0, 1))) + ") when moving 2 forward");
 					break;
 				}
 			}
@@ -387,7 +387,7 @@ void Board::move(Pos2 piece, Pos2 to)
 			}
 			else
 			{
-				LogWarning("invalid move for whitePawn: can't capture that spot (" + Piece_to_string(board->mypieces[to.index()]) + " at " + operator$(to) + ")");
+				LogWarning("invalid move for whitePawn: can't capture that spot (" + Piece_to_string(mypieces[to.index()]) + " at " + operator$(to) + ")");
 				break;
 			}
 		}

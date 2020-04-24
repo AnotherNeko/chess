@@ -14,5 +14,10 @@
 
 int main() {
 	Board board;
-	board.move(Pos2(0, 0), Vec2(0, 6));
+	board.move(Pos2(0, 1), Vec2(0, +2));
+	board.move(Pos2(0, 0), Vec2(0, +2));
+	board.move(Pos2(0, 2), Vec2(+7, 0));
+	board.move(Pos2(1, 0), Vec2(-1, +2));
+	board.move(Pos2(1, 1), Vec2(0, +2));
+	board.move(Pos2(2, 0), Vec2(-2, +2));
 }

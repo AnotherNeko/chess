@@ -4,7 +4,7 @@
 #include <string>
 void inline Print(const char* const output) { std::cout << output; }
 
-std::string Pos2_to_string(Pieces piece)
+std::string Piece_to_string(Pieces piece)
 {
     switch (piece)
     {

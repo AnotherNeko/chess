@@ -206,15 +206,67 @@ static void moveBishop(Board* board, Pos2 bishop, Pos2 to)
 static void moveQueen(Board* board, Pos2 queen, Pos2 to)
 {
 	//can go straight in N, NE, E, SE, S, SW, W, NW
-	Vec2 temp = to - queen;
-	if ((abs(temp.x.x) == abs(temp.y.x) || temp.x.x == 0 || temp.y.x == 0) xor temp != Vec2(/*going nowhere*/)) 
+	if (abs(temp.x.x) == abs(temp.y.x) && temp != Vec2(/*going nowhere*/)) //if going diagonally
 	{
+		Vec2 norm;
+		if (to.x.x > queen.x.x && to.y.x > queen.y.x) //change in x and change in y are positive
+		{
+			norm = Vec2(1, 1);
+		}
+		if (to.x.x < queen.x.x && to.y.x < queen.y.x) //change in x and change in y are negative
+		{
+			norm = Vec2(-1, -1);
+		}
+		if (to.x.x > queen.x.x && to.y.x < queen.y.x)
+		{
+			norm = Vec2(1, -1);
+		}
+		if (to.x.x < queen.x.x && to.y.x > queen.y.x)
+		{
+			norm = Vec2(-1, 1);
+		}
+		for (Pos2 i = queen + norm; i != to; i += norm)
+		{
+			if (board->mypieces[i.index()] != empty)
+			{
+				LogWarning("There's a piece (" + Pos2_to_string(board->mypieces[i.index()]) + " at " + operator$(i) + ") in the way");
+				return;
+			}
+		}
 		board->forceMove(queen, to);
+		return;
 	}
-	else
+	if ((queen.x == to.x) xor (queen.y == to.y)) //if going NESW
 	{
-		LogWarning("invalid move for Queen");
+		Vec2 norm;
+		if (to.x.x > queen.x.x)
+		{
+			norm = Vec2(1, 0);
+		}
+		if (to.x.x < queen.x.x)
+		{
+			norm = Vec2(-1, 0);
+		}
+		if (to.y.x > queen.y.x)
+		{
+			norm = Vec2(0, 1);
+		}
+		if (to.y.x < queen.y.x)
+		{
+			norm = Vec2(0, -1);
+		}
+		for (Pos2 i = queen + norm; i != to; i += norm)
+		{
+			if (board->mypieces[i.index()] != empty)
+			{
+				LogWarning("There's a piece (" + Pos2_to_string(board->mypieces[i.index()]) + " at " + operator$(i) + ") in the way");
+				return;
+			}
+		}
+		board->forceMove(queen, to);
+		return;
 	}
+		LogWarning("invalid move for Queen");
 
 }
 static void moveKing(Board* board, Pos2 king, Pos2 to)

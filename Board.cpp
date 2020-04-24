@@ -11,12 +11,12 @@ void populateBoard(Board* boardptr);
 //constructor also populates the board
 Board::Board()
 {
-    populateBoard(this);
-    mainInstance = this;
+	populateBoard(this);
+	mainInstance = this;
 }
 
 //fill a row with pieces
-void populateRowWithPieces(Board* boardptr, Pos2 i, Pieces whichkind) 
+void populateRowWithPieces(Board* boardptr, Pos2 i, Pieces whichkind)
 {
 	i.x.x = 0;
 	for (i; i.x.x < 8; i.x.x++)
@@ -86,8 +86,8 @@ bool Board::forceMove(Pos2 piece, Pos2 to)
 		}
 		else
 
-		{	
-			if(!matchingSigns(mypieces[piece.index()], mypieces[to.index()]))
+		{
+			if (!matchingSigns(mypieces[piece.index()], mypieces[to.index()]))
 			{
 				addToCappedList(mypieces[to.index()]); //capture
 				mypieces[to.index()] = mypieces[piece.index()]; //copy to captured piece, overwriting it
@@ -109,7 +109,7 @@ bool Board::forceMove(Pos2 piece, Pos2 to)
 }
 
 
-static void moveRook(Board* board, Pos2 rook, Pos2 to)
+static inline void moveRook(Board* board, Pos2 rook, Pos2 to)
 {
 	if ((rook.x == to.x) xor (rook.y == to.y)) //can go NESW
 	{
@@ -132,9 +132,9 @@ static void moveRook(Board* board, Pos2 rook, Pos2 to)
 		}
 		for (Pos2 i = rook + norm; i != to; i += norm)
 		{
-			if (board->mypieces[i.index()] != empty) 
+			if (board->mypieces[i.index()] != empty)
 			{
-				LogWarning("There's a piece (" + Pos2_to_string(board->mypieces[i.index()]) + " at " + operator$(i) + ") in the way");
+				LogWarning("There's a piece (" + Piece_to_string(board->mypieces[i.index()]) + " at " + operator$(i) + ") in the way");
 				return;
 			}
 		}
@@ -146,17 +146,17 @@ static void moveRook(Board* board, Pos2 rook, Pos2 to)
 		return;
 	}
 }
-static void moveKnight(Board* board, Pos2 knight, Pos2 to)
+static inline void moveKnight(Board* board, Pos2 knight, Pos2 to)
 {
-	Vec2 temp = to - knight;   
-	if (  temp == Vec2(+2, +1)	 //  ██  ██
-		||temp == Vec2(+2, -1)	 //██      ██
-		||temp == Vec2(+1, +2)	 //    []
-		||temp == Vec2(+1, -2)	 //██      ██
-		||temp == Vec2(-2, +1)	 //  ██  ██
-		||temp == Vec2(-2, -1)
-		||temp == Vec2(-1, +1)
-		||temp == Vec2(-1, -1))
+	Vec2 temp = to - knight;
+	if (temp == Vec2(+2, +1)	 //  ██  ██
+		|| temp == Vec2(+2, -1)	 //██      ██
+		|| temp == Vec2(+1, +2)	 //    []
+		|| temp == Vec2(+1, -2)	 //██      ██
+		|| temp == Vec2(-2, +1)	 //  ██  ██
+		|| temp == Vec2(-2, -1)
+		|| temp == Vec2(-1, +1)
+		|| temp == Vec2(-1, -1))
 	{
 		board->forceMove(knight, to);
 	}
@@ -165,7 +165,7 @@ static void moveKnight(Board* board, Pos2 knight, Pos2 to)
 		LogWarning("invalid move for Knight");
 	}
 }
-static void moveBishop(Board* board, Pos2 bishop, Pos2 to)
+static inline void moveBishop(Board* board, Pos2 bishop, Pos2 to)
 {
 	Vec2 temp = to - bishop;
 	if (abs(temp.x.x) == abs(temp.y.x) && temp != Vec2(/*going nowhere*/)) //can go diagonally
@@ -179,11 +179,11 @@ static void moveBishop(Board* board, Pos2 bishop, Pos2 to)
 		{
 			norm = Vec2(-1, -1);
 		}
-		if (to.x.x > bishop.x.x && to.y.x < bishop.y.x) 
+		if (to.x.x > bishop.x.x && to.y.x < bishop.y.x)
 		{
 			norm = Vec2(1, -1);
 		}
-		if (to.x.x < bishop.x.x && to.y.x > bishop.y.x) 
+		if (to.x.x < bishop.x.x && to.y.x > bishop.y.x)
 		{
 			norm = Vec2(-1, 1);
 		}
@@ -191,7 +191,7 @@ static void moveBishop(Board* board, Pos2 bishop, Pos2 to)
 		{
 			if (board->mypieces[i.index()] != empty)
 			{
-				LogWarning("There's a piece (" + Pos2_to_string(board->mypieces[i.index()]) + " at " + operator$(i) + ") in the way");
+				LogWarning("There's a piece (" + Piece_to_string(board->mypieces[i.index()]) + " at " + operator$(i) + ") in the way");
 				return;
 			}
 		}
@@ -203,7 +203,7 @@ static void moveBishop(Board* board, Pos2 bishop, Pos2 to)
 		return;
 	}
 }
-static void moveQueen(Board* board, Pos2 queen, Pos2 to)
+static inline void moveQueen(Board* board, Pos2 queen, Pos2 to)
 {
 	//can go straight in N, NE, E, SE, S, SW, W, NW
 	if (abs(temp.x.x) == abs(temp.y.x) && temp != Vec2(/*going nowhere*/)) //if going diagonally
@@ -229,7 +229,7 @@ static void moveQueen(Board* board, Pos2 queen, Pos2 to)
 		{
 			if (board->mypieces[i.index()] != empty)
 			{
-				LogWarning("There's a piece (" + Pos2_to_string(board->mypieces[i.index()]) + " at " + operator$(i) + ") in the way");
+				LogWarning("There's a piece (" + Piece_to_string(board->mypieces[i.index()]) + " at " + operator$(i) + ") in the way");
 				return;
 			}
 		}
@@ -259,17 +259,17 @@ static void moveQueen(Board* board, Pos2 queen, Pos2 to)
 		{
 			if (board->mypieces[i.index()] != empty)
 			{
-				LogWarning("There's a piece (" + Pos2_to_string(board->mypieces[i.index()]) + " at " + operator$(i) + ") in the way");
+				LogWarning("There's a piece (" + Piece_to_string(board->mypieces[i.index()]) + " at " + operator$(i) + ") in the way");
 				return;
 			}
 		}
 		board->forceMove(queen, to);
 		return;
 	}
-		LogWarning("invalid move for Queen");
+	LogWarning("invalid move for Queen");
 
 }
-static void moveKing(Board* board, Pos2 king, Pos2 to)
+static inline void moveKing(Board* board, Pos2 king, Pos2 to)
 {
 	Vec2 temp = to - king;
 	if (abs(temp.x.x) == 1 || abs(temp.y.x) == 1) //can go 1 or 1.21 in any direction
@@ -282,28 +282,59 @@ static void moveKing(Board* board, Pos2 king, Pos2 to)
 	}
 
 }
+
 void Board::move(Pos2 piece, Pos2 to)
 {
+	if (to == piece)
+	{
+		LogWarning("must make a move/can't go nowhere");
+		return;
+	}
 	switch (mypieces[piece.index()])
 	{
 	case empty:
 		LogWarning("can't move nothing");
 		break;
 	case blackPawn:
-		if (to == piece + Vec2(0,-1))
+		if (mypieces[to.index()] == empty)
 		{
-			forceMove(piece, to);
-		}
-		else {
-			if (to == piece + Vec2(0, -2) && to.y.x == 4)
+			//pawn: simple move forward
+			if (to == piece + Vec2(0, -1)) 
 			{
 				forceMove(piece, to);
+				break;
+			}
+
+			//pawn: "move 2 spaces" 
+			if (to == piece + Vec2(0, -2) && to.y.x == 4) 
+			{
+				if (mypieces[(piece + Vec2(0, -1)).index()] == empty)
+				{
+					forceMove(piece, to);
+					break;
+				}
+				else
+				{
+					LogWarning("invalid move for blackPawn: can't jump over non-empty space (" + Piece_to_string(board->mypieces[(piece + Vec2(0, -1)).index()]) + " at " + operator$((piece + Vec2(0, -1))) + ") when moving 2 forward");
+					break;
+				}
+			}
+		}
+		else
+		{
+			//pawn: capture
+			if (to == piece + Vec2(1, -1) || to == piece + Vec2(-1, -1))
+			{
+				forceMove(piece, to);
+				break;
 			}
 			else
 			{
-				LogWarning("invalid move for blackPawn");
+				LogWarning("invalid move for blackPawn: can't capture that spot (" + Piece_to_string(board->mypieces[to.index()]) + " at " + operator$(to) + ")");
+				break;
 			}
 		}
+		LogError("Unexpected Pawnmoving Condition");
 		break;
 	case blackRook:
 		moveRook(this, piece, to);
@@ -321,20 +352,45 @@ void Board::move(Pos2 piece, Pos2 to)
 		moveKing(this, piece, to);
 		break;
 	case whitePawn:
-		if (to == piece + Vec2(0, 1))
+		if (mypieces[to.index()] == empty)
 		{
-			forceMove(piece, to);
-		}
-		else {
-			if (to == piece + Vec2(0, 2) && to.y.x == 3)
+			//pawn: simple move forward
+			if (to == piece + Vec2(0, 1))
 			{
 				forceMove(piece, to);
+				break;
+			}
+
+			//pawn: "move 2 spaces" 
+			if (to == piece + Vec2(0, 2) && to.y.x == 4)
+			{
+				if (mypieces[(piece + Vec2(0, 1)).index()] == empty)
+				{
+					forceMove(piece, to);
+					break;
+				}
+				else
+				{
+					LogWarning("invalid move for whitePawn: can't jump over non-empty space (" + Piece_to_string(board->mypieces[(piece + Vec2(0, 1)).index()]) + " at " + operator$((piece + Vec2(0, 1))) + ") when moving 2 forward");
+					break;
+				}
+			}
+		}
+		else
+		{
+			//pawn: capture
+			if (to == piece + Vec2(1, 1) || to == piece + Vec2(-1, 1))
+			{
+				forceMove(piece, to);
+				break;
 			}
 			else
 			{
-				LogWarning("invalid move for blackPawn");
+				LogWarning("invalid move for whitePawn: can't capture that spot (" + Piece_to_string(board->mypieces[to.index()]) + " at " + operator$(to) + ")");
+				break;
 			}
 		}
+		LogError("Unexpected Pawnmoving Condition");
 		break;
 	case whiteRook:
 		moveRook(this, piece, to);

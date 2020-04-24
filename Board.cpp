@@ -206,6 +206,7 @@ static inline void moveBishop(Board* board, Pos2 bishop, Pos2 to)
 static inline void moveQueen(Board* board, Pos2 queen, Pos2 to)
 {
 	//can go straight in N, NE, E, SE, S, SW, W, NW
+	Vec2 temp = to - queen;
 	if (abs(temp.x.x) == abs(temp.y.x) && temp != Vec2(/*going nowhere*/)) //if going diagonally
 	{
 		Vec2 norm;

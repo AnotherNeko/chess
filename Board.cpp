@@ -362,7 +362,7 @@ void Board::move(Pos2 piece, Pos2 to)
 			}
 
 			//pawn: "move 2 spaces" 
-			if (to == piece + Vec2(0, 2) && to.y.x == 4)
+			if (to == piece + Vec2(0, 2) && to.y.x == 3)
 			{
 				if (mypieces[(piece + Vec2(0, 1)).index()] == empty)
 				{

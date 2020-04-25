@@ -24,7 +24,7 @@
     <ClCompile Include="Board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\DebugTools\Log.cpp">
+    <ClCompile Include="DebugTools\Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

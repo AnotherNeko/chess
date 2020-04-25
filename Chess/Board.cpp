@@ -1,7 +1,7 @@
 ﻿/*Board.cpp*/
 #include "Board.h"
 #include "PosVec.h"
-#include "Debugtools/Log.h"
+#include "../Debugtools/Log.h"
 #include "Utils.h"
 
 Board* Board::mainInstance = nullptr;

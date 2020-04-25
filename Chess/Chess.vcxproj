@@ -19,15 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\DebugTools\Log.cpp" />
     <ClCompile Include="Board.cpp" />
-    <ClCompile Include="Debugtools\Log.cpp" />
     <ClCompile Include="PosVec.cpp" />
     <ClCompile Include="source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\DebugTools\Log.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="ChessPieces.h" />
-    <ClInclude Include="Debugtools\Log.h" />
     <ClInclude Include="PosVec.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
@@ -103,6 +103,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>glfw3.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

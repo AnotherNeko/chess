@@ -1,5 +1,5 @@
 ﻿/*PosVec.cpp*/#include "PosVec.h"
-#include "../Debugtools/Log.h"
+#include "DebugTools\Log.h"
 
 //this is meant to only work with Chess.
 

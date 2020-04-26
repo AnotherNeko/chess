@@ -31,6 +31,9 @@
     <ClInclude Include="PosVec.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shaders\Basic.shader" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{D920FE80-B7E7-4538-92F6-9AAB32616D16}</ProjectGuid>

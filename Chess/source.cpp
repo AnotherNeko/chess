@@ -179,7 +179,9 @@ int main(void)
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
+        GLClearErrors();
         glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr);
+        GLPrintErrors();
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);

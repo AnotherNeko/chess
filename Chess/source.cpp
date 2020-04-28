@@ -7,25 +7,6 @@
 #include <string>
 #include <sstream>
 
-static void GLClearErrors()
-{
-    GLenum error = glGetError();
-    while (error != GL_NO_ERROR)
-    {
-        LogInfo((std::string)"Cleared Error" + std::to_string(error));
-        error = glGetError();
-    }
-}
-static void GLPrintErrors()
-{
-    GLenum error = glGetError();
-    while (error != GL_NO_ERROR)
-    {
-        LogWarning((std::string)"OpenGL:" + std::to_string(error));
-        error = glGetError();
-    }
-}
-
 struct ShaderProgramSource
 {
     std::string VertexSource;
@@ -79,7 +60,7 @@ static unsigned int CompileShader(unsigned int type, const std::string& source)
     {
         int length;
         glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-        char* message = (char*)_alloca(length * sizeof(char));
+        char* message = (char*)alloca(length * sizeof(char));
         glGetShaderInfoLog(id, length, &length, message);
         LogError("failed to compile " + (std::string)(type == GL_VERTEX_SHADER ? "vertex" : "fragment") + " shader!");
         LogError(message);
@@ -120,7 +101,7 @@ int main(void)
         return -1;
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 640, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -137,31 +118,23 @@ int main(void)
 
     std::cout << glGetString(GL_VERSION) << std::endl;
 
-    unsigned const static int trivertct = 6;
-    unsigned const static int count = 2;
-    float positions[] = {
-           -0.5f, -0.5f, //0
-            0.5f, -0.5f, //1
-            0.5f,  0.5f, //2
-           -0.5f,  0.5f, //3
-    };
-    unsigned int indicies[] = {
-        0, 1, 2,
-        2, 3, 0
+    unsigned const static int count = 12;
+    float positions[count] = {
+            0.0f,  0.5f,
+           -0.5f, -0.5f,
+            0.5f, -0.5f,
+            1.0f,  0.0f,
+            0.9f,  0.0f,
+            0.95f, -0.1f
     };
 
     unsigned int buffer;
     glGenBuffers(1, &buffer);
     glBindBuffer(GL_ARRAY_BUFFER, buffer);
-    glBufferData(GL_ARRAY_BUFFER, trivertct * count * sizeof(float), positions, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, count * sizeof(float), positions, GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0/*index*/, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
-
-    unsigned int ibo; //index buffer object
-    glGenBuffers(1, &ibo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(signed int), indicies, GL_STATIC_DRAW);
 
     ShaderProgramSource sauce = ParseShader("Resources/shaders/Basic.shader");
     //LogInfo("Fragment Shader:");
@@ -179,7 +152,7 @@ int main(void)
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);

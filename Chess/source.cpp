@@ -21,7 +21,7 @@ static void GLPrintErrors()
     GLenum error = glGetError();
     while (error != GL_NO_ERROR)
     {
-        LogWarning((std::string)"OpenGL:" + std::to_string(error));
+        LogError((std::string)"OpenGL:" + std::to_string(error));
         error = glGetError();
     }
 }
@@ -79,7 +79,7 @@ static unsigned int CompileShader(unsigned int type, const std::string& source)
     {
         int length;
         glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-        char* message = (char*)_alloca(length * sizeof(char));
+        char* message = (char*)alloca(length * sizeof(char));
         glGetShaderInfoLog(id, length, &length, message);
         LogError("failed to compile " + (std::string)(type == GL_VERTEX_SHADER ? "vertex" : "fragment") + " shader!");
         LogError(message);

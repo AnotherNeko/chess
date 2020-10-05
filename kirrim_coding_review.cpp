@@ -49,11 +49,11 @@ class Knight {
 	: piece.color(team), piece.x((Btrue_Gfalse) ? 1 : 6), piece.y((Btrue_Gfalse) ? 0 : 7)
 	{
 	}
-	//HEY MR. HUSZAR, THIS IS PROBABLY THE PART YOU CARE ABOUT
-	//HEY MR. HUSZAR, THIS IS PROBABLY THE PART YOU CARE ABOUT
-	//HEY MR. HUSZAR, THIS IS PROBABLY THE PART YOU CARE ABOUT
-	//HEY MR. HUSZAR, THIS IS PROBABLY THE PART YOU CARE ABOUT
-	//HEY MR. HUSZAR, THIS IS PROBABLY THE PART YOU CARE ABOUT
+	//HEY MR. (teacher), THIS IS PROBABLY THE PART YOU CARE ABOUT
+	//HEY MR. (teacher), THIS IS PROBABLY THE PART YOU CARE ABOUT
+	//HEY MR. (teacher), THIS IS PROBABLY THE PART YOU CARE ABOUT
+	//HEY MR. (teacher), THIS IS PROBABLY THE PART YOU CARE ABOUT
+	//HEY MR. (teacher), THIS IS PROBABLY THE PART YOU CARE ABOUT
 	void move(bool left_right, bool up_down, bool more_vertical_than_horizontal) {
 		/*
 		  ██  ██  ██  ██
